@@ -1,0 +1,9 @@
+﻿/target
+**/*.rs.bk
+*.swp
+.DS_Store
+.env
+__pycache__/
+venv/
+node_modules/
+*.rkyv

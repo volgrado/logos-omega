@@ -1,0 +1,13 @@
+﻿[workspace]
+resolver = '2'
+members = [
+    'core/*',
+    'compilers/*',
+    'platforms/*',
+    'tools/*'
+]
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = 'abort'
