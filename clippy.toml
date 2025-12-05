@@ -1,0 +1,5 @@
+cognitive-complexity-threshold = 20
+disallowed-methods = [
+    # Prevent using standard JSON serialization in the hot path
+    { path = "serde_json::to_string", reason = "Use rkyv for core data serialization" }
+]

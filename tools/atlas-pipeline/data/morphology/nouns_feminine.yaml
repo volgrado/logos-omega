@@ -1,0 +1,88 @@
+- id: 4
+  name: "Fem -i (paroxytone)"
+  pos: "Noun"
+  example: "νίκη"
+  triggers:
+    - template: "el-κλίση-'νίκη'"
+    - suffix: "η"
+      gender: "Feminine"
+  endings:
+    - { flags: 161, suffix: "η" }
+    - { flags: 162, suffix: "ης" }
+    - { flags: 164, suffix: "η" }
+    - { flags: 168, suffix: "η" }
+    - { flags: 289, suffix: "ες" }
+    - { flags: 290, suffix: "ων" }
+    - { flags: 292, suffix: "ες" }
+    - { flags: 296, suffix: "ες" }
+
+- id: 5
+  name: "Fem -a (paroxytone)"
+  pos: "Noun"
+  example: "θάλασσα"
+  triggers:
+    - template: "el-κλίση-'θάλασσα'"
+    - suffix: "α"
+      gender: "Feminine"
+  endings:
+    - { flags: 161, suffix: "α" }
+    - { flags: 162, suffix: "ας" }
+    - { flags: 164, suffix: "α" }
+    - { flags: 168, suffix: "α" }
+    - { flags: 289, suffix: "ες" }
+    - { flags: 290, suffix: "ων" }
+    - { flags: 292, suffix: "ες" }
+    - { flags: 296, suffix: "ες" }
+
+- id: 12
+  name: "Fem -ou"
+  pos: "Noun"
+  example: "αλεπού"
+  triggers:
+    - template: "el-κλίση-'αλεπού'"
+    - template: "el-κλίση-'μαϊμού'"
+  endings:
+    - { flags: 161, suffix: "ού" }
+    - { flags: 162, suffix: "ούς" }
+    - { flags: 164, suffix: "ού" }
+    - { flags: 168, suffix: "ού" }
+    - { flags: 289, suffix: "ούδες" }
+    - { flags: 290, suffix: "ούδων" }
+    - { flags: 292, suffix: "ούδες" }
+    - { flags: 296, suffix: "ούδες" }
+
+- id: 13
+  name: "Fem -i (archaic/scholarly)"
+  pos: "Noun"
+  example: "πόλη"
+  triggers:
+    - template: "el-κλίση-'πόλη'"
+    - template: "el-κλίση-'δύναμη'"
+    - template: "el-κλίση-'κατάσταση'"
+    - template: "el-κλίση-'κυβέρνηση'"
+  endings:
+    - { flags: 161, suffix: "η" }
+    - { flags: 162, suffix: "ης" }
+    - { flags: 164, suffix: "η" }
+    - { flags: 168, suffix: "η" }
+    - { flags: 289, suffix: "εις" }
+    - { flags: 290, suffix: "εων" }
+    - { flags: 292, suffix: "εις" }
+    - { flags: 296, suffix: "εις" }
+
+- id: 26
+  name: "Fem -a (irregular)"
+  pos: "Noun"
+  example: "γιαγιά"
+  triggers:
+    - template: "el-κλίση-'γιαγιά'"
+    - template: "el-κλίση-'μαμά'"
+  endings:
+    - { flags: 161, suffix: "ά" }
+    - { flags: 162, suffix: "ιάς" }
+    - { flags: 164, suffix: "ά" }
+    - { flags: 168, suffix: "ά" }
+    - { flags: 289, suffix: "άδες" }
+    - { flags: 290, suffix: "άδων" }
+    - { flags: 292, suffix: "άδες" }
+    - { flags: 296, suffix: "άδες" }

@@ -1,0 +1,9 @@
+[package]
+name = "logos-ecs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hecs = "0.10"
+logos-protocol = { path = "../logos-protocol", features = ["std"] }
+thiserror = "1.0"

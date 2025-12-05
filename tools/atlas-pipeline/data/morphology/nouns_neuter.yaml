@@ -1,0 +1,107 @@
+- id: 6
+  name: "Neut -o"
+  pos: "Noun"
+  example: "βιβλίο"
+  triggers:
+    - template: "el-κλίση-'βιβλίο'"
+    - suffix: "ο"
+      gender: "Neuter"
+  endings:
+    - { flags: 193, suffix: "ο" }
+    - { flags: 194, suffix: "ου" }
+    - { flags: 196, suffix: "ο" }
+    - { flags: 200, suffix: "ο" }
+    - { flags: 321, suffix: "α" }
+    - { flags: 322, suffix: "ων" }
+    - { flags: 324, suffix: "α" }
+    - { flags: 328, suffix: "α" }
+
+- id: 7
+  name: "Neut -i"
+  pos: "Noun"
+  example: "παιδί"
+  triggers:
+    - template: "el-κλίση-'παιδί'"
+    - suffix: "ί"
+      gender: "Neuter"
+  endings:
+    - { flags: 193, suffix: "ί" }
+    - { flags: 194, suffix: "ιού" }
+    - { flags: 196, suffix: "ί" }
+    - { flags: 200, suffix: "ί" }
+    - { flags: 321, suffix: "ιά" }
+    - { flags: 322, suffix: "ιών" }
+    - { flags: 324, suffix: "ιά" }
+    - { flags: 328, suffix: "ιά" }
+
+- id: 10
+  name: "Neut -ma"
+  pos: "Noun"
+  example: "πρόβλημα"
+  triggers:
+    - template: "el-κλίση-'πρόβλημα'"
+    - template: "el-κλίση-'όνομα'"
+  endings:
+    - { flags: 193, suffix: "μα" }
+    - { flags: 194, suffix: "ματος" }
+    - { flags: 196, suffix: "μα" }
+    - { flags: 200, suffix: "μα" }
+    - { flags: 321, suffix: "ματα" }
+    - { flags: 322, suffix: "μάτων" }
+    - { flags: 324, suffix: "ματα" }
+    - { flags: 328, suffix: "ματα" }
+
+- id: 11
+  name: "Neut -os (s-stem)"
+  pos: "Noun"
+  example: "δάσος"
+  triggers:
+    - template: "el-κλίση-'δάσος'"
+    - template: "el-κλίση-'έδαφος'"
+    - template: "el-κλίση-'μέρος'"
+    - suffix: "ος"
+      gender: "Neuter"
+  endings:
+    - { flags: 193, suffix: "ος" }
+    - { flags: 194, suffix: "ους" }
+    - { flags: 196, suffix: "ος" }
+    - { flags: 200, suffix: "ος" }
+    - { flags: 321, suffix: "η" }
+    - { flags: 322, suffix: "ών" }
+    - { flags: 324, suffix: "η" }
+    - { flags: 328, suffix: "η" }
+
+- id: 15
+  name: "Neut -as"
+  pos: "Noun"
+  example: "κρέας"
+  triggers:
+    - template: "el-κλίση-'κρέας'"
+    - template: "el-κλίση-'τέρας'"
+  endings:
+    - { flags: 193, suffix: "ας" }
+    - { flags: 194, suffix: "ατος" }
+    - { flags: 196, suffix: "ας" }
+    - { flags: 200, suffix: "ας" }
+    - { flags: 321, suffix: "ατα" }
+    - { flags: 322, suffix: "άτων" }
+    - { flags: 324, suffix: "ατα" }
+    - { flags: 328, suffix: "ατα" }
+
+- id: 17
+  name: "Neut -on"
+  pos: "Noun"
+  example: "προϊόν"
+  triggers:
+    - template: "el-κλίση-'προϊόν'"
+    - template: "el-κλίση-'ενδιαφέρον'"
+    - template: "el-κλίση-'παρόν'"
+  endings:
+    - { flags: 193, suffix: "ον" }
+    - { flags: 194, suffix: "όντος" }
+    - { flags: 196, suffix: "ον" }
+    - { flags: 200, suffix: "ον" }
+    - { flags: 321, suffix: "όντα" }
+    - { flags: 322, suffix: "όντων" }
+    - { flags: 324, suffix: "όντα" }
+    - { flags: 328, suffix: "όντα" }

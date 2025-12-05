@@ -1,0 +1,189 @@
+- id: 1
+  name: "Masc -os"
+  pos: "Noun"
+  example: "άνθρωπος"
+  triggers:
+    - template: "el-κλίση-α-ος"
+    - suffix: "ος"
+      gender: "Masculine"
+  endings:
+    - { flags: 145, suffix: "ος" }
+    - { flags: 146, suffix: "ου" }
+    - { flags: 148, suffix: "ο" }
+    - { flags: 149, suffix: "ε" }
+    - { flags: 273, suffix: "οι" }
+    - { flags: 274, suffix: "ων" }
+    - { flags: 276, suffix: "ους" }
+    - { flags: 277, suffix: "οι" }
+
+- id: 2
+  name: "Masc -is (paroxytone)"
+  pos: "Noun"
+  example: "ναύτης"
+  triggers:
+    - template: "el-κλίση-'ναύτης'"
+    - suffix: "της"
+      gender: "Masculine"
+  endings:
+    - { flags: 145, suffix: "ης" }
+    - { flags: 146, suffix: "η" }
+    - { flags: 148, suffix: "η" }
+    - { flags: 149, suffix: "η" }
+    - { flags: 273, suffix: "ες" }
+    - { flags: 274, suffix: "ών" }
+    - { flags: 276, suffix: "ες" }
+    - { flags: 277, suffix: "ες" }
+
+- id: 3
+  name: "Masc -as (paroxytone)"
+  pos: "Noun"
+  example: "πατέρας"
+  triggers:
+    - template: "el-κλίση-'πατέρας'"
+    - suffix: "ρας"
+      gender: "Masculine"
+  endings:
+    - { flags: 145, suffix: "ας" }
+    - { flags: 146, suffix: "α" }
+    - { flags: 148, suffix: "α" }
+    - { flags: 149, suffix: "α" }
+    - { flags: 273, suffix: "ες" }
+    - { flags: 274, suffix: "ων" }
+    - { flags: 276, suffix: "ες" }
+    - { flags: 277, suffix: "ες" }
+
+- id: 8
+  name: "Masc -as (oxytone)"
+  pos: "Noun"
+  example: "χειμώνας"
+  triggers:
+    - template: "el-κλίση-'χειμώνας'"
+    - template: "el-κλίση-'αγώνας'"
+  endings:
+    - { flags: 145, suffix: "ας" }
+    - { flags: 146, suffix: "α" }
+    - { flags: 148, suffix: "α" }
+    - { flags: 149, suffix: "α" }
+    - { flags: 273, suffix: "ες" }
+    - { flags: 274, suffix: "ων" }
+    - { flags: 276, suffix: "ες" }
+    - { flags: 277, suffix: "ες" }
+
+- id: 9
+  name: "Masc -is (oxytone)"
+  pos: "Noun"
+  example: "μαθητής"
+  triggers:
+    - template: "el-κλίση-'μαθητής'"
+    - template: "el-κλίση-'νικητής'"
+  endings:
+    - { flags: 145, suffix: "ής" }
+    - { flags: 146, suffix: "ή" }
+    - { flags: 148, suffix: "ή" }
+    - { flags: 149, suffix: "ή" }
+    - { flags: 273, suffix: "ές" }
+    - { flags: 274, suffix: "ών" }
+    - { flags: 276, suffix: "ές" }
+    - { flags: 277, suffix: "ές" }
+
+- id: 14
+  name: "Masc -eas"
+  pos: "Noun"
+  example: "συγγραφέας"
+  triggers:
+    - template: "el-κλίση-'συγγραφέας'"
+    - template: "el-κλίση-'κουρέας'"
+    - template: "el-κλίση-'τομέας'"
+  endings:
+    - { flags: 145, suffix: "έας" }
+    - { flags: 146, suffix: "έα" }
+    - { flags: 148, suffix: "έα" }
+    - { flags: 149, suffix: "έα" }
+    - { flags: 273, suffix: "είς" }
+    - { flags: 274, suffix: "έων" }
+    - { flags: 276, suffix: "είς" }
+    - { flags: 277, suffix: "είς" }
+
+- id: 16
+  name: "Masc -es"
+  pos: "Noun"
+  example: "καφές"
+  triggers:
+    - template: "el-κλίση-'καφές'"
+    - template: "el-κλίση-'μπαξές'"
+  endings:
+    - { flags: 145, suffix: "ές" }
+    - { flags: 146, suffix: "έ" }
+    - { flags: 148, suffix: "έ" }
+    - { flags: 149, suffix: "έ" }
+    - { flags: 273, suffix: "έδες" }
+    - { flags: 274, suffix: "έδων" }
+    - { flags: 276, suffix: "έδες" }
+    - { flags: 277, suffix: "έδες" }
+
+- id: 21
+  name: "Masc -is (oxytone alt)"
+  pos: "Noun"
+  example: "κριτής"
+  triggers:
+    - template: "el-κλίση-'κριτής'"
+    - template: "el-κλίση-'ποιητής'"
+  endings:
+    - { flags: 145, suffix: "ής" }
+    - { flags: 146, suffix: "ή" }
+    - { flags: 148, suffix: "ή" }
+    - { flags: 149, suffix: "ή" }
+    - { flags: 273, suffix: "ές" }
+    - { flags: 274, suffix: "ών" }
+    - { flags: 276, suffix: "ές" }
+    - { flags: 277, suffix: "ές" }
+
+- id: 22
+  name: "Masc -as (plural -ides)"
+  pos: "Noun"
+  example: "αέρας"
+  triggers:
+    - template: "el-κλίση-'αέρας'"
+    - template: "el-κλίση-'ψαράς'"
+  endings:
+    - { flags: 145, suffix: "ας" }
+    - { flags: 146, suffix: "α" }
+    - { flags: 148, suffix: "α" }
+    - { flags: 149, suffix: "α" }
+    - { flags: 273, suffix: "ηδες" }
+    - { flags: 274, suffix: "ηδων" }
+    - { flags: 276, suffix: "ηδες" }
+    - { flags: 277, suffix: "ηδες" }
+
+- id: 23
+  name: "Masc -or"
+  pos: "Noun"
+  example: "διδάκτωρ"
+  triggers:
+    - template: "el-κλίση-'διδάκτωρ'"
+    - template: "el-κλίση-'ρήτωρ'"
+  endings:
+    - { flags: 145, suffix: "ωρ" }
+    - { flags: 146, suffix: "ορος" }
+    - { flags: 148, suffix: "ορα" }
+    - { flags: 149, suffix: "ορ" }
+    - { flags: 273, suffix: "ορες" }
+    - { flags: 274, suffix: "όρων" }
+    - { flags: 276, suffix: "ορες" }
+    - { flags: 277, suffix: "ορες" }
+
+- id: 25
+  name: "Masc -ous (irregular)"
+  pos: "Noun"
+  example: "παππούς"
+  triggers:
+    - template: "el-κλίση-'παππούς'"
+  endings:
+    - { flags: 145, suffix: "ούς" }
+    - { flags: 146, suffix: "ού" }
+    - { flags: 148, suffix: "ού" }
+    - { flags: 149, suffix: "ού" }
+    - { flags: 273, suffix: "ούδες" }
+    - { flags: 274, suffix: "ούδων" }
+    - { flags: 276, suffix: "ούδες" }
+    - { flags: 277, suffix: "ούδες" }

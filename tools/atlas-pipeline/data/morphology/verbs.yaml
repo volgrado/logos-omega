@@ -1,0 +1,482 @@
+# Common Greek Verb Paradigms
+# Based on Wiktionary templates
+
+- id: 100
+  name: "Verb -izo (Active)"
+  pos: "Verb"
+  example: "νομίζω"
+  triggers:
+    - template: "el-κλίσ-'νομίζω'"
+    - template: "el-κλίσ-'δροσίζω'"
+    - suffix: "ίζω"
+      gender: null
+  endings:
+    # Present Active Indicative
+    - { flags: 1, suffix: "ίζω" }
+    - { flags: 2, suffix: "ίζεις" }
+    - { flags: 3, suffix: "ίζει" }
+    - { flags: 4, suffix: "ίζουμε" }
+    - { flags: 5, suffix: "ίζετε" }
+    - { flags: 6, suffix: "ίζουν" }
+
+- id: 101
+  name: "Verb -ono (Active)"
+  pos: "Verb"
+  example: "δηλώνω"
+  triggers:
+    - template: "el-κλίσ-'δηλώνω'"
+    - suffix: "ώνω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ώνω" }
+    - { flags: 2, suffix: "ώνεις" }
+    - { flags: 3, suffix: "ώνει" }
+    - { flags: 4, suffix: "ώνουμε" }
+    - { flags: 5, suffix: "ώνετε" }
+    - { flags: 6, suffix: "ώνουν" }
+
+- id: 102
+  name: "Verb -oro (Active)"
+  pos: "Verb"
+  example: "θεωρώ"
+  triggers:
+    - template: "el-κλίσ-'θεωρώ'"
+    - suffix: "ωρώ"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ωρώ" }
+    - { flags: 2, suffix: "ωρείς" }
+    - { flags: 3, suffix: "ωρεί" }
+    - { flags: 4, suffix: "ωρούμε" }
+    - { flags: 5, suffix: "ωρείτε" }
+    - { flags: 6, suffix: "ωρούν" }
+
+- id: 103
+  name: "Verb -o (Active - Agapo)"
+  pos: "Verb"
+  example: "αγαπώ"
+  triggers:
+    - template: "el-κλίσ-'αγαπώ'"
+    - template: "el-κλίσ-'ζητώ'"
+    - template: "el-κλίσ-'γελώ'"
+    - template: "el-κλίσ-'βαρώ'"
+    - suffix: "απώ"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ώ" }
+    - { flags: 2, suffix: "άς" }
+    - { flags: 3, suffix: "ά" }
+    - { flags: 4, suffix: "ούμε" }
+    - { flags: 5, suffix: "άτε" }
+    - { flags: 6, suffix: "ούν" }
+
+- id: 104
+  name: "Verb -eno (Active)"
+  pos: "Verb"
+  example: "δένω"
+  triggers:
+    - template: "el-κλίσ-'δένω'"
+    - suffix: "ένω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ένω" }
+    - { flags: 2, suffix: "ένεις" }
+    - { flags: 3, suffix: "ένει" }
+    - { flags: 4, suffix: "ένουμε" }
+    - { flags: 5, suffix: "ένετε" }
+    - { flags: 6, suffix: "ένουν" }
+
+- id: 105
+  name: "Verb -evo (Active)"
+  pos: "Verb"
+  example: "προστατεύω"
+  triggers:
+    - template: "el-κλίσ-'προστατεύω'"
+    - template: "el-κλίσ-'παντρεύω'"
+    - suffix: "εύω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "εύω" }
+    - { flags: 2, suffix: "εύεις" }
+    - { flags: 3, suffix: "εύει" }
+    - { flags: 4, suffix: "εύουμε" }
+    - { flags: 5, suffix: "εύετε" }
+    - { flags: 6, suffix: "εύουν" }
+
+- id: 106
+  name: "Verb -azo (Active)"
+  pos: "Verb"
+  example: "αλλάζω"
+  triggers:
+    - template: "el-κλίσ-'αλλάζω'"
+    - suffix: "άζω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "άζω" }
+    - { flags: 2, suffix: "άζεις" }
+    - { flags: 3, suffix: "άζει" }
+    - { flags: 4, suffix: "άζουμε" }
+    - { flags: 5, suffix: "άζετε" }
+    - { flags: 6, suffix: "άζουν" }
+
+- id: 107
+  name: "Verb -eno (Active - Simeno)"
+  pos: "Verb"
+  example: "σημαίνω"
+  triggers:
+    - template: "el-κλίσ-'σημαίνω'"
+    - template: "el-κλίσ-'ομορφαίνω'"
+    - suffix: "αίνω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "αίνω" }
+    - { flags: 2, suffix: "αίνεις" }
+    - { flags: 3, suffix: "αίνει" }
+    - { flags: 4, suffix: "αίνουμε" }
+    - { flags: 5, suffix: "αίνετε" }
+    - { flags: 6, suffix: "αίνουν" }
+
+- id: 108
+  name: "Verb -eko (Active)"
+  pos: "Verb"
+  example: "πλέκω"
+  triggers:
+    - template: "el-κλίσ-'πλέκω'"
+    - suffix: "έκω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "έκω" }
+    - { flags: 2, suffix: "έκεις" }
+    - { flags: 3, suffix: "έκει" }
+    - { flags: 4, suffix: "έκουμε" }
+    - { flags: 5, suffix: "έκετε" }
+    - { flags: 6, suffix: "έκουν" }
+
+- id: 109
+  name: "Verb -ero (Active)"
+  pos: "Verb"
+  example: "ξέρω"
+  triggers:
+    - template: "el-κλίσ-'ξέρω'"
+    - suffix: "έρω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "έρω" }
+    - { flags: 2, suffix: "έρεις" }
+    - { flags: 3, suffix: "έρει" }
+    - { flags: 4, suffix: "έρουμε" }
+    - { flags: 5, suffix: "έρετε" }
+    - { flags: 6, suffix: "έρουν" }
+
+- id: 110
+  name: "Verb -alo (Active)"
+  pos: "Verb"
+  example: "λαλώ"
+  triggers:
+    - template: "el-κλίσ-'λαλώ'"
+    - suffix: "αλώ"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "αλώ" }
+    - { flags: 2, suffix: "αλείς" }
+    - { flags: 3, suffix: "αλεί" }
+    - { flags: 4, suffix: "αλούμε" }
+    - { flags: 5, suffix: "αλείτε" }
+    - { flags: 6, suffix: "αλούν" }
+
+- id: 111
+  name: "Verb -yno (Active)"
+  pos: "Verb"
+  example: "λύνω"
+  triggers:
+    - template: "el-κλίσ-'λύνω'"
+    - template: "el-κλίσ-'οξύνω'"
+    - suffix: "ύνω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ύνω" }
+    - { flags: 2, suffix: "ύνεις" }
+    - { flags: 3, suffix: "ύνει" }
+    - { flags: 4, suffix: "ύνουμε" }
+    - { flags: 5, suffix: "ύνετε" }
+    - { flags: 6, suffix: "ύνουν" }
+
+# --- Passive Voice ---
+
+- id: 120
+  name: "Verb -omai (Passive - izomai)"
+  pos: "Verb"
+  example: "ψηφίζομαι"
+  triggers:
+    - template: "el-κλίσ-'ψηφίζομαι'"
+    - suffix: "ίζομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ίζομαι" }
+    - { flags: 2, suffix: "ίζεσαι" }
+    - { flags: 3, suffix: "ίζεται" }
+    - { flags: 4, suffix: "ιζόμαστε" }
+    - { flags: 5, suffix: "ίζεστε" }
+    - { flags: 6, suffix: "ίζονται" }
+
+- id: 121
+  name: "Verb -onomai (Passive)"
+  pos: "Verb"
+  example: "δηλώνομαι"
+  triggers:
+    - template: "el-κλίσ-'δηλώνομαι'"
+    - suffix: "ώνομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ώνομαι" }
+    - { flags: 2, suffix: "ώνεσαι" }
+    - { flags: 3, suffix: "ώνεται" }
+    - { flags: 4, suffix: "ωνόμαστε" }
+    - { flags: 5, suffix: "ώνεστε" }
+    - { flags: 6, suffix: "ώνονται" }
+
+- id: 122
+  name: "Verb -oumai (Passive - theoroumai)"
+  pos: "Verb"
+  example: "θεωρούμαι"
+  triggers:
+    - template: "el-κλίσ-'θεωρούμαι'"
+    - suffix: "ούμαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ούμαι" }
+    - { flags: 2, suffix: "είσαι" }
+    - { flags: 3, suffix: "είται" }
+    - { flags: 4, suffix: "ούμαστε" }
+    - { flags: 5, suffix: "είστε" }
+    - { flags: 6, suffix: "ούνται" }
+
+- id: 123
+  name: "Verb -iemai (Passive - agapiemai)"
+  pos: "Verb"
+  example: "αγαπιέμαι"
+  triggers:
+    - template: "el-κλίσ-'αγαπιέμαι'"
+    - template: "el-κλίσ-'γελιέμαι'"
+    - suffix: "ιέμαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ιέμαι" }
+    - { flags: 2, suffix: "ιέσαι" }
+    - { flags: 3, suffix: "ιέται" }
+    - { flags: 4, suffix: "ιόμαστε" }
+    - { flags: 5, suffix: "ιέστε" }
+    - { flags: 6, suffix: "ιούνται" }
+
+- id: 124
+  name: "Verb -enomai (Passive - denomai)"
+  pos: "Verb"
+  example: "δένομαι"
+  triggers:
+    - template: "el-κλίσ-'δένομαι'"
+    - suffix: "ένομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ένομαι" }
+    - { flags: 2, suffix: "ένεσαι" }
+    - { flags: 3, suffix: "ένεται" }
+    - { flags: 4, suffix: "ενόμαστε" }
+    - { flags: 5, suffix: "ένεστε" }
+    - { flags: 6, suffix: "ένονται" }
+
+- id: 125
+  name: "Verb -ekomai (Passive - plekomai)"
+  pos: "Verb"
+  example: "πλέκομαι"
+  triggers:
+    - template: "el-κλίσ-'πλέκομαι'"
+    - suffix: "έκομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "έκομαι" }
+    - { flags: 2, suffix: "έκεσαι" }
+    - { flags: 3, suffix: "έκεται" }
+    - { flags: 4, suffix: "εκόμαστε" }
+    - { flags: 5, suffix: "έκεστε" }
+    - { flags: 6, suffix: "έκονται" }
+
+- id: 126
+  name: "Verb -evomai (Passive - pantrevomai)"
+  pos: "Verb"
+  example: "παντρεύομαι"
+  triggers:
+    - template: "el-κλίσ-'παντρεύομαι'"
+    - template: "el-κλίσ-'προστατεύομαι'"
+    - suffix: "εύομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "εύομαι" }
+    - { flags: 2, suffix: "εύεσαι" }
+    - { flags: 3, suffix: "εύεται" }
+    - { flags: 4, suffix: "ευόμαστε" }
+    - { flags: 5, suffix: "εύεστε" }
+    - { flags: 6, suffix: "εύονται" }
+
+- id: 127
+  name: "Verb -omai (Passive - amynomai)"
+  pos: "Verb"
+  example: "αμύνομαι"
+  triggers:
+    - template: "el-κλίσ-'αμύνομαι'"
+    - suffix: "ύνομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ύνομαι" }
+    - { flags: 2, suffix: "ύνεσαι" }
+    - { flags: 3, suffix: "ύνεται" }
+    - { flags: 4, suffix: "υνόμαστε" }
+    - { flags: 5, suffix: "ύνεστε" }
+    - { flags: 6, suffix: "ύνονται" }
+
+- id: 128
+  name: "Verb -omai (Passive - ravomai)"
+  pos: "Verb"
+  example: "ράβομαι"
+  triggers:
+    - template: "el-κλίσ-'ράβομαι'"
+    - suffix: "άβομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "άβομαι" }
+    - { flags: 2, suffix: "άβεσαι" }
+    - { flags: 3, suffix: "άβεται" }
+    - { flags: 4, suffix: "αβόμαστε" }
+    - { flags: 5, suffix: "άβεστε" }
+    - { flags: 6, suffix: "άβονται" }
+
+- id: 129
+  name: "Verb -omai (Passive - idryomai)"
+  pos: "Verb"
+  example: "ιδρύομαι"
+  triggers:
+    - template: "el-κλίσ-'ιδρύομαι'"
+    - suffix: "ύομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ύομαι" }
+    - { flags: 2, suffix: "ύεσαι" }
+    - { flags: 3, suffix: "ύεται" }
+    - { flags: 4, suffix: "υόμαστε" }
+    - { flags: 5, suffix: "ύεστε" }
+    - { flags: 6, suffix: "ύονται" }
+
+- id: 130
+  name: "Verb -omai (Passive - trelainomai)"
+  pos: "Verb"
+  example: "τρελαίνομαι"
+  triggers:
+    - template: "el-κλίσ-'τρελαίνομαι'"
+    - template: "el-κλίσ-'μιαίνομαι'"
+    - suffix: "αίνομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "αίνομαι" }
+    - { flags: 2, suffix: "αίνεσαι" }
+    - { flags: 3, suffix: "αίνεται" }
+    - { flags: 4, suffix: "αινόμαστε" }
+    - { flags: 5, suffix: "αίνεστε" }
+    - { flags: 6, suffix: "αίνονται" }
+
+- id: 131
+  name: "Verb -oumai (Passive - teloumai)"
+  pos: "Verb"
+  example: "τελούμαι"
+  triggers:
+    - template: "el-κλίσ-'τελούμαι'"
+    - template: "el-κλίσ-'ζητούμαι'"
+    - suffix: "ούμαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ούμαι" }
+    - { flags: 2, suffix: "είσαι" }
+    - { flags: 3, suffix: "είται" }
+    - { flags: 4, suffix: "ούμαστε" }
+    - { flags: 5, suffix: "είστε" }
+    - { flags: 6, suffix: "ούνται" }
+
+- id: 132
+  name: "Verb -o (Active - mpaino)"
+  pos: "Verb"
+  example: "μπαίνω"
+  triggers:
+    - template: "el-κλίσ-'μπαίνω'"
+    - template: "el-κλίσ-'ανεβαίνω'"
+    - template: "el-κλίσ-'προβαίνω'"
+    - suffix: "αίνω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "αίνω" }
+    - { flags: 2, suffix: "αίνεις" }
+    - { flags: 3, suffix: "αίνει" }
+    - { flags: 4, suffix: "αίνουμε" }
+    - { flags: 5, suffix: "αίνετε" }
+    - { flags: 6, suffix: "αίνουν" }
+
+- id: 133
+  name: "Verb -omai (Passive - anamenomai)"
+  pos: "Verb"
+  example: "αναμένομαι"
+  triggers:
+    - template: "el-κλίσ-'αναμένομαι'"
+    - suffix: "ένομαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ένομαι" }
+    - { flags: 2, suffix: "ένεσαι" }
+    - { flags: 3, suffix: "ένεται" }
+    - { flags: 4, suffix: "ενόμαστε" }
+    - { flags: 5, suffix: "ένεστε" }
+    - { flags: 6, suffix: "ένονται" }
+
+- id: 134
+  name: "Verb -o (Active - spao)"
+  pos: "Verb"
+  example: "σπάω"
+  triggers:
+    - template: "el-κλίσ-'σπάω'"
+    - suffix: "άω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "άω" }
+    - { flags: 2, suffix: "άς" }
+    - { flags: 3, suffix: "άει" }
+    - { flags: 4, suffix: "άμε" }
+    - { flags: 5, suffix: "άτε" }
+    - { flags: 6, suffix: "άνε" }
+
+- id: 135
+  name: "Verb -amai (Passive - fovamai)"
+  pos: "Verb"
+  example: "φοβάμαι"
+  triggers:
+    - template: "el-κλίσ-'φοβάμαι'"
+    - suffix: "άμαι"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "άμαι" }
+    - { flags: 2, suffix: "άσαι" }
+    - { flags: 3, suffix: "άται" }
+    - { flags: 4, suffix: "όμαστε" }
+    - { flags: 5, suffix: "άστε" }
+    - { flags: 6, suffix: "ούνται" }
+
+- id: 136
+  name: "Verb -o (Active - akouo)"
+  pos: "Verb"
+  example: "ακούω"
+  triggers:
+    - template: "el-κλίσ-'ακούω'"
+    - suffix: "ούω"
+      gender: null
+  endings:
+    - { flags: 1, suffix: "ούω" }
+    - { flags: 2, suffix: "ούς" }
+    - { flags: 3, suffix: "ούει" }
+    - { flags: 4, suffix: "ούμε" }
+    - { flags: 5, suffix: "ούτε" }
+    - { flags: 6, suffix: "ούν" }

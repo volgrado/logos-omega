@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Logos Omega Playground</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 2rem;
+            background: #111;
+            color: #eee;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007acc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        pre {
+            background: #000;
+            padding: 15px;
+            border-left: 5px solid #007acc;
+            overflow-x: auto;
+        }
+
+        .error {
+            color: #ff5555;
+        }
+
+        .success {
+            color: #55ff55;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ω Logos Omega Engine</h1>
+    <p>Status: <span id="status" style="color: yellow;">Loading Kernel...</span></p>
+
+    <textarea id="input" placeholder="Type Greek here (e.g., Ο άνθρωπος)"></textarea>
+    <button id="analyzeBtn" disabled>Analyze</button>
+
+    <h3>Analysis Report (JSON)</h3>
+    <pre id="output">Waiting for input...</pre>
+
+    <script type="module">
+        import init, { LogosEngine, init_panic_hook } from './pkg/logos_wasm.js';
+
+        async function boot() {
+            try {
+                // 1. Initialize WASM memory
+                await init();
+                init_panic_hook();
+
+                // 2. Fetch the Dictionary Binary
+                const response = await fetch('dict_v10.rkyv');
+                if (!response.ok) throw new Error("Failed to load dict_v10.rkyv");
+                const arrayBuffer = await response.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+
+                // 3. Boot the Engine (Zero-Copy Load)
+                window.engine = new LogosEngine(uint8Array);
+
+                document.getElementById('status').innerText = "Online (WASM + Rkyv Loaded)";
+                document.getElementById('status').style.color = "#55ff55";
+                document.getElementById('analyzeBtn').disabled = false;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('status').innerText = "Boot Failed: " + err.message;
+                document.getElementById('status').style.color = "#ff5555";
+            }
+        }
+
+        document.getElementById('analyzeBtn').addEventListener('click', () => {
+            const text = document.getElementById('input').value;
+            const start = performance.now();
+
+            // EXECUTE ENGINE
+            try {
+                const result = window.engine.analyze(text);
+                const end = performance.now();
+                const time = (end - start).toFixed(2);
+
+                document.getElementById('output').innerText =
+                    `// Execution Time: ${time}ms\n` +
+                    JSON.stringify(result, null, 2);
+            } catch (e) {
+                document.getElementById('output').innerText = "Error during analysis: " + e;
+            }
+        });
+
+        boot();
+    </script>
+</body>
+
+</html>

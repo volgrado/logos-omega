@@ -1,0 +1,23 @@
+[package]
+name = "logos-protocol"
+version = "0.1.0"
+edition = "2021"
+authors = ["Logos Omega Architect"]
+description = "Fundamental types and shared protocols for the Logos Omega Engine."
+
+[dependencies]
+# Zero-Copy Serialization
+rkyv = { version = "0.7", features = ["validation"] }
+
+# Bitflags for morphological tagging
+bitflags = { version = "2.4", features = ["serde"] }
+
+# Error handling
+thiserror = "1.0"
+
+# Optional: Serde for debug/tools (not for core kernel hot path)
+serde = { version = "1.0", features = ["derive"], optional = true }
+
+[features]
+default = []
+std = []

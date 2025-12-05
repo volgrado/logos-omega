@@ -1,10 +1,16 @@
 ﻿[workspace]
 resolver = '2'
 members = [
-    'core/*',
-    'compilers/*',
-    'platforms/*',
-    'tools/*'
+    "core/logos-protocol",
+    "core/logos-morph",
+    "core/logos-ecs",
+    "tools/atlas-compiler",
+    "compilers/logos-parser",
+    "compilers/logos-solver",
+    "platforms/logos-wasm",
+    # "compilers/*",
+    # "platforms/*",
+    # "tools/*"
 ]
 
 [profile.release]

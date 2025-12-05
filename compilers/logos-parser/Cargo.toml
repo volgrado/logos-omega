@@ -1,0 +1,10 @@
+[package]
+name = "logos-parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+logos-protocol = { path = "../../core/logos-protocol", features = ["std"] }
+nom = "7.1"
+rkyv = { version = "0.7", features = ["validation"] }
+thiserror = "1.0"

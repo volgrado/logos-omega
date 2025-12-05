@@ -1,0 +1,146 @@
+- id: 18
+  name: "Adj -os, -i, -o"
+  pos: "Adjective"
+  example: "καλός"
+  triggers:
+    - template: "el-κλίση-'καλός'"
+    - template: "el-κλίση-'όμορφος'"
+    - template: "el-κλίση-'σοφός'"
+  endings:
+    # Masc
+    - { flags: 145, suffix: "ος" }
+    - { flags: 146, suffix: "ου" }
+    - { flags: 148, suffix: "ο" }
+    - { flags: 149, suffix: "ε" }
+    - { flags: 273, suffix: "οι" }
+    - { flags: 274, suffix: "ων" }
+    - { flags: 276, suffix: "ους" }
+    - { flags: 277, suffix: "οι" }
+    # Fem (-η)
+    - { flags: 161, suffix: "η" }
+    - { flags: 162, suffix: "ης" }
+    - { flags: 164, suffix: "η" }
+    - { flags: 168, suffix: "η" }
+    - { flags: 289, suffix: "ες" }
+    - { flags: 290, suffix: "ων" }
+    - { flags: 292, suffix: "ες" }
+    - { flags: 296, suffix: "ες" }
+    # Neut (-ο)
+    - { flags: 193, suffix: "ο" }
+    - { flags: 194, suffix: "ου" }
+    - { flags: 196, suffix: "ο" }
+    - { flags: 200, suffix: "ο" }
+    - { flags: 321, suffix: "α" }
+    - { flags: 322, suffix: "ων" }
+    - { flags: 324, suffix: "α" }
+    - { flags: 328, suffix: "α" }
+
+- id: 19
+  name: "Adj -os, -a, -o"
+  pos: "Adjective"
+  example: "ωραίος"
+  triggers:
+    - template: "el-κλίση-'ωραίος'"
+    - template: "el-κλίση-'αρχαίος'"
+    - template: "el-κλίση-'νέος'"
+  endings:
+    # Masc
+    - { flags: 145, suffix: "ος" }
+    - { flags: 146, suffix: "ου" }
+    - { flags: 148, suffix: "ο" }
+    - { flags: 149, suffix: "ε" }
+    - { flags: 273, suffix: "οι" }
+    - { flags: 274, suffix: "ων" }
+    - { flags: 276, suffix: "ους" }
+    - { flags: 277, suffix: "οι" }
+    # Fem (-α)
+    - { flags: 161, suffix: "α" }
+    - { flags: 162, suffix: "ας" }
+    - { flags: 164, suffix: "α" }
+    - { flags: 168, suffix: "α" }
+    - { flags: 289, suffix: "ες" }
+    - { flags: 290, suffix: "ων" }
+    - { flags: 292, suffix: "ες" }
+    - { flags: 296, suffix: "ες" }
+    # Neut (-ο)
+    - { flags: 193, suffix: "ο" }
+    - { flags: 194, suffix: "ου" }
+    - { flags: 196, suffix: "ο" }
+    - { flags: 200, suffix: "ο" }
+    - { flags: 321, suffix: "α" }
+    - { flags: 322, suffix: "ων" }
+    - { flags: 324, suffix: "α" }
+    - { flags: 328, suffix: "α" }
+
+- id: 20
+  name: "Adj -ys, -eia, -y"
+  pos: "Adjective"
+  example: "βαθύς"
+  triggers:
+    - template: "el-κλίση-'βαθύς'"
+    - template: "el-κλίση-'βαρύς'"
+    - template: "el-κλίση-'παχύς'"
+  endings:
+    # Masc
+    - { flags: 145, suffix: "ύς" }
+    - { flags: 146, suffix: "ύ" }
+    - { flags: 148, suffix: "ύ" }
+    - { flags: 149, suffix: "ύ" }
+    - { flags: 273, suffix: "είς" }
+    - { flags: 274, suffix: "έων" }
+    - { flags: 276, suffix: "είς" }
+    - { flags: 277, suffix: "είς" }
+    # Fem
+    - { flags: 161, suffix: "εία" }
+    - { flags: 162, suffix: "είας" }
+    - { flags: 164, suffix: "εία" }
+    - { flags: 168, suffix: "εία" }
+    - { flags: 289, suffix: "είες" }
+    - { flags: 290, suffix: "ειών" }
+    - { flags: 292, suffix: "είες" }
+    - { flags: 296, suffix: "είες" }
+    # Neut
+    - { flags: 193, suffix: "ύ" }
+    - { flags: 194, suffix: "ύ" }
+    - { flags: 196, suffix: "ύ" }
+    - { flags: 200, suffix: "ύ" }
+    - { flags: 321, suffix: "έα" }
+    - { flags: 322, suffix: "έων" }
+    - { flags: 324, suffix: "έα" }
+    - { flags: 328, suffix: "έα" }
+
+- id: 24
+  name: "Adj -is, -es (sigmatic)"
+  pos: "Adjective"
+  example: "συνήθης"
+  triggers:
+    - template: "el-κλίση-'συνήθης'"
+    - template: "el-κλίση-'διεθνής'"
+    - template: "el-κλίση-'ασθενής'"
+  endings:
+    # Masc/Fem (-ης)
+    - { flags: 145, suffix: "ης" }
+    - { flags: 146, suffix: "ους" }
+    - { flags: 148, suffix: "η" }
+    - { flags: 149, suffix: "η" }
+    - { flags: 161, suffix: "ης" }
+    - { flags: 162, suffix: "ους" }
+    - { flags: 164, suffix: "η" }
+    - { flags: 168, suffix: "η" }
+    - { flags: 273, suffix: "εις" }
+    - { flags: 274, suffix: "ων" }
+    - { flags: 276, suffix: "εις" }
+    - { flags: 277, suffix: "εις" }
+    - { flags: 289, suffix: "εις" }
+    - { flags: 290, suffix: "ων" }
+    - { flags: 292, suffix: "εις" }
+    - { flags: 296, suffix: "εις" }
+    # Neut (-ες)
+    - { flags: 193, suffix: "ες" }
+    - { flags: 194, suffix: "ους" }
+    - { flags: 196, suffix: "ες" }
+    - { flags: 200, suffix: "ες" }
+    - { flags: 321, suffix: "η" }
+    - { flags: 322, suffix: "ων" }
+    - { flags: 324, suffix: "η" }
+    - { flags: 328, suffix: "η" }

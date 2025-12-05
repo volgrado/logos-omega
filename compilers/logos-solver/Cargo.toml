@@ -1,0 +1,10 @@
+[package]
+name = "logos-solver"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+logos-protocol = { path = "../../core/logos-protocol", features = ["std"] }
+logos-ecs = { path = "../../core/logos-ecs" }
+petgraph = "0.6"
+thiserror = "1.0"
