@@ -1,15 +1,9 @@
 use petgraph::graph::{Graph, NodeIndex};
 use petgraph::Directed;
 use petgraph::visit::EdgeRef;
-use logos_protocol::LemmaId;
+use logos_protocol::{LemmaId, Relation, SemanticNetwork};
 use std::collections::HashMap;
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum Relation {
-    IsA,                // Inheritance (e.g., Apple IsA Fruit)
-    RequiresAttribute,  // Constraint (e.g., Eat RequiresAttribute Edible)
-    HasAttribute,       // Property (e.g., Fruit HasAttribute Edible)
-}
+use rkyv::Archived;
 
 pub struct SemanticGraph {
     graph: Graph<LemmaId, Relation, Directed>,
@@ -22,6 +16,25 @@ impl SemanticGraph {
             graph: Graph::new(),
             index_map: HashMap::new(),
         }
+    }
+
+    pub fn from_archived(archived: &Archived<SemanticNetwork>) -> Self {
+        let mut slf = Self::new();
+        for edge in archived.edges.iter() {
+            let from = LemmaId(edge.from.0);
+            let to = LemmaId(edge.to.0);
+             
+            // Manual mapping from ArchivedRelation to Relation
+            // Since we know the variants match exactly in protocol
+            let rel = match edge.relation {
+                logos_protocol::ArchivedRelation::IsA => Relation::IsA,
+                logos_protocol::ArchivedRelation::RequiresAttribute => Relation::RequiresAttribute,
+                logos_protocol::ArchivedRelation::HasAttribute => Relation::HasAttribute,
+            };
+
+            slf.add_relation(from, to, rel);
+        }
+        slf
     }
 
     pub fn add_concept(&mut self, lemma: LemmaId) {

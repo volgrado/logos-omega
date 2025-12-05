@@ -77,6 +77,8 @@ pub enum Mood {
     Subjunctive = 1,
     Imperative = 2,
     Participle = 3,
+    Infinitive = 4,
+    Optative = 5,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Archive, Serialize, Deserialize)]
@@ -105,6 +107,8 @@ bitflags! {
         const GENITIVE = 2;
         const ACCUSATIVE = 4;
         const VOCATIVE = 8;
+        // Dative added later at high bit
+        const DATIVE = 2097152;
 
         // Gender (Bits 4-6)
         const MASCULINE = 16;
@@ -128,6 +132,18 @@ bitflags! {
         const PRESENT = 16384;
         const PAST = 32768;
         const FUTURE = 65536;
+
+        // Part of Speech Hints (Bits 17-19)
+        const PREPOSITION = 131072;
+        const ARTICLE = 262144;
+        const ADJECTIVE = 524288;
+        const NOUN = 1048576;
+        const CONJUNCTION = 4194304;
+        const PRONOUN = 8388608;
+        const PARTICIPLE = 16777216;
+        const INFINITIVE = 33554432;
+        const VERB = 67108864;
+        const RELATIVE = 134217728;
     }
 }
 

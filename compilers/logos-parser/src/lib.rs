@@ -1,5 +1,7 @@
 pub mod parser;
 pub mod token;
+pub mod syntax;
+pub mod morphology;
 
 use logos_protocol::{Dictionary, LemmaId};
 use rkyv::Archived;
@@ -81,7 +83,8 @@ mod tests {
                 Lemma { 
                     id: LemmaId(10), 
                     text: "άνθρωπος".to_string(), 
-                    gender: Gender::Masculine 
+                    gender: Gender::Masculine,
+                    pos: logos_protocol::PartOfSpeech::Noun,
                 }
             ],
             paradigms: vec![],

@@ -28,6 +28,14 @@ pub enum DependencyRole {
     Subject,
     Object,
     Modifier,
+    PrepositionArg,
+    IndirectObject,
+    Coordinator,
+    Conjunct,
+    PassiveAgent,
+    AbsoluteClause,
+    Complement,
+    RelativeClause,
     // Add more as needed (IndirectObj, etc.)
 }
 

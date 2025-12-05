@@ -8,3 +8,4 @@ logos-protocol = { path = "../../core/logos-protocol", features = ["std"] }
 logos-ecs = { path = "../../core/logos-ecs" }
 petgraph = "0.6"
 thiserror = "1.0"
+rkyv = "0.7"

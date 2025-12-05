@@ -422,6 +422,7 @@ dependencies = [
  "logos-ecs",
  "logos-protocol",
  "petgraph",
+ "rkyv",
  "thiserror",
 ]
 

@@ -1,7 +1,8 @@
 pub mod graph;
 pub mod solver;
 
-pub use graph::{SemanticGraph, Relation};
+pub use graph::SemanticGraph;
+pub use logos_protocol::Relation;
 pub use solver::validate_semantics;
 
 #[cfg(test)]

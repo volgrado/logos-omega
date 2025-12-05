@@ -50,6 +50,8 @@ impl From<AgreementError> for SerializableAgreementError {
 pub struct LogosEngine {
     // We own the raw binary of the dictionary (loaded via fetch() in JS)
     data: Vec<u8>,
+    // Optional loaded Semantic Graph
+    semantic_graph: Option<SemanticGraph>,
 }
 
 #[wasm_bindgen]
@@ -57,7 +59,16 @@ impl LogosEngine {
     #[wasm_bindgen(constructor)]
     pub fn new(data: Vec<u8>) -> Self {
         // In a production app, we would validate the RKYV archive here using rkyv::check_archived_root
-        Self { data }
+        Self { 
+            data,
+            semantic_graph: None,
+        }
+    }
+
+    pub fn load_semantics(&mut self, data: Vec<u8>) {
+        // Assume trusted input for now, consistent with Dictionary loading
+        let archived = unsafe { rkyv::archived_root::<logos_protocol::SemanticNetwork>(&data) };
+        self.semantic_graph = Some(SemanticGraph::from_archived(archived));
     }
 
     /// The Main Loop: Text -> Lexer -> ECS -> Solver -> JSON
@@ -71,98 +82,114 @@ impl LogosEngine {
     /// Pure Rust analysis (No WASM dependencies in return type)
     pub fn analyze_core(&self, input: &str) -> AnalysisReport {
         // 1. Zero-Copy Load of Dictionary
-        // We assume the data is valid. In prod, use check_archived_root.
         let dict = unsafe { rkyv::archived_root::<Dictionary>(&self.data) };
 
         // 2. Lexical Analysis (Text -> Tokens)
         let lexer = Lexer::new(dict);
         let tokens = lexer.tokenize(input);
         
-        let debug_tokens: Vec<TokenDebug> = tokens.iter().map(|t| {
-            let mut lemma_id_opt = None;
-            let mut morph_desc = "None".to_string();
-            let mut kind_str = "Other".to_string();
-            let mut debug_msg = String::new();
-            let mut is_resolved = false;
+        // 3. Morphology Resolution (Unified Pipeline)
+        struct AnalyzedToken<'a> {
+            text: &'a str,
+            analysis: logos_parser::morphology::MorphAnalysis,
+        }
 
-            // Try to resolve morphology for BOTH Word and UnknownWord
-            // This bypasses Lexer limitations for the playground
+        let analyzed_tokens: Vec<AnalyzedToken> = tokens.iter().map(|t| {
+            // Check for Punctuation first to avoid unnecessary dictionary lookup
+            if let logos_parser::token::TokenKind::Punctuation(_) = t.kind {
+                 return AnalyzedToken {
+                    text: &t.text,
+                    analysis: logos_parser::morphology::MorphAnalysis {
+                        flags: logos_protocol::MorphFlags::empty(),
+                        lemma_id: None,
+                        debug_msg: "Punctuation".to_string(),
+                        stem: String::new(),
+                        kind: "Punctuation".to_string(),
+                    }
+                };
+            }
+
+            let mut known_id = None;
             if let logos_parser::token::TokenKind::Word(id) = t.kind {
-                lemma_id_opt = Some(id.0);
-                kind_str = "Word".to_string();
-                is_resolved = true;
-            } else if let logos_parser::token::TokenKind::UnknownWord = t.kind {
-                kind_str = "Unknown".to_string();
-                // We will try to resolve it below anyway
-                is_resolved = true; 
-            } else if let logos_parser::token::TokenKind::Punctuation(_) = t.kind {
-                kind_str = "Punctuation".to_string();
+                known_id = Some(id.0);
             }
 
-            if is_resolved {
-                 let (morph, debug) = resolve_morphology(dict, &t.text, lemma_id_opt);
-                 morph_desc = morph;
-                 debug_msg = debug;
-                 
-                 // If we found a match and it was unknown, recover it
-                 if morph_desc != "None" && kind_str == "Unknown" {
-                     // We need to find the lemma ID again if we only have the text
-                     // This is a bit inefficient but works for recovery
-                     if let Some(lemma) = dict.lemmas.iter().find(|l| t.text.starts_with(&*l.text) || l.text.starts_with(&t.text)) {
-                         kind_str = "Word (Recovered)".to_string();
-                         lemma_id_opt = Some(lemma.id.0);
-                     }
-                 }
-            }
-
-            TokenDebug {
-                text: t.text.to_string(),
-                lemma_id: lemma_id_opt,
-                kind: kind_str,
-                morphology: morph_desc,
-                debug: debug_msg,
+            let analysis = logos_parser::morphology::resolve_morphology(dict, &t.text, known_id);
+            
+            AnalyzedToken {
+                text: &t.text,
+                analysis,
             }
         }).collect();
 
-        // 3. ECS Simulation (Tokens -> Entities)
+        // 4. Transform for Output (TokenDebug)
+        let debug_tokens: Vec<TokenDebug> = analyzed_tokens.iter().map(|at| {
+             let morph_str = if at.analysis.flags.is_empty() {
+                 "None".to_string()
+             } else {
+                 format!("{:?}", at.analysis.flags)
+             };
+
+             TokenDebug {
+                text: at.text.to_string(),
+                lemma_id: at.analysis.lemma_id.map(|id| id.0),
+                kind: at.analysis.kind.clone(),
+                morphology: morph_str,
+                debug: at.analysis.debug_msg.clone(),
+            }
+        }).collect();
+
+        // 5. ECS Simulation (Tokens -> Entities)
         let mut world = LogosWorld::new();
         let mut entities = Vec::new();
 
-        for token in &tokens {
-            let mut lemma_id_opt = None;
-            let mut flags = logos_protocol::MorphFlags::empty();
-
-            if let logos_parser::token::TokenKind::Word(id) = token.kind {
-                lemma_id_opt = Some(id);
-                
-                // Resolve Flags (Re-use logic or simplify for ECS?)
-                // For now, let's just re-run resolution or trust the debug tokens?
-                // The ECS needs the actual flags enum, not string.
-                // Let's duplicate the lookup for now to keep ECS independent of debug view
-                if let Some(lemma) = dict.lemmas.iter().find(|l| l.id.0 == id.0) {
-                     for paradigm in dict.paradigms.iter() {
-                        for (rule_flags, rule_suffix) in paradigm.endings.iter() {
-                            if token.text.ends_with(rule_suffix.as_str()) {
-                                let stem_len = token.text.len() - rule_suffix.as_str().len();
-                                let candidate_stem = &token.text[..stem_len];
-                                if lemma.text.starts_with(candidate_stem) {
-                                    flags = logos_protocol::MorphFlags::from_bits_truncate(*rule_flags);
-                                    break;
-                                }
-                            }
-                        }
-                        if !flags.is_empty() { break; }
-                    }
-                }
-            }
-            entities.push(world.add_token(token.text.to_string(), lemma_id_opt, flags));
+        for at in &analyzed_tokens {
+            entities.push(
+                world.add_token(
+                    at.text.to_string(), 
+                    at.analysis.lemma_id, 
+                    at.analysis.flags
+                )
+            );
         }
 
-        // Mock Syntax: If 2 words, assume "Det Noun" structure
-        if entities.len() == 2 {
-            use logos_ecs::components::DependencyRole;
-            // 0 modifies 1
-            world.set_dependency(entities[0], entities[1], DependencyRole::Modifier);
+        // 6. Syntactic Parsing
+        // Construct MorphTokens for parser input
+        let parser_input: Vec<logos_parser::syntax::MorphToken> = analyzed_tokens.iter().map(|at| {
+            logos_parser::syntax::MorphToken {
+                text: at.text,
+                flags: at.analysis.flags,
+            }
+        }).collect();
+
+        let dependencies = logos_parser::syntax::parse_greedy(&parser_input);
+        
+        for dep in dependencies {
+            if dep.dependent_index < entities.len() && dep.head_index < entities.len() {
+                let child_entity = entities[dep.dependent_index];
+                let head_entity = entities[dep.head_index];
+                
+                use logos_parser::syntax::SyntaxRole;
+                use logos_ecs::components::DependencyRole;
+
+                let role = match dep.role {
+                    SyntaxRole::Subject => DependencyRole::Subject,
+                    SyntaxRole::Object => DependencyRole::Object,
+                    SyntaxRole::Modifier => DependencyRole::Modifier,
+                    SyntaxRole::Root => DependencyRole::Root,
+                    SyntaxRole::PrepositionArg => DependencyRole::PrepositionArg,
+                    SyntaxRole::IndirectObject => DependencyRole::IndirectObject,
+                    SyntaxRole::Coordinator => DependencyRole::Coordinator,
+                    SyntaxRole::Conjunct => DependencyRole::Conjunct,
+                    SyntaxRole::PassiveAgent => DependencyRole::PassiveAgent,
+                    SyntaxRole::AbsoluteClause => DependencyRole::AbsoluteClause,
+                    SyntaxRole::Complement => DependencyRole::Complement,
+                    SyntaxRole::RelativeClause => DependencyRole::RelativeClause,
+                    SyntaxRole::None => continue,
+                };
+                
+                world.set_dependency(child_entity, head_entity, role);
+            }
         }
 
         let syntax_errors_raw = world.validate();
@@ -171,17 +198,15 @@ impl LogosEngine {
             .map(|e| e.into())
             .collect();
 
-        // 5. Semantic Validation (Meaning)
-        // We construct a blank graph for now. 
-        // Phase 8 would load this graph from the Dictionary struct.
-        let graph = SemanticGraph::new();
-        let semantic_errors_raw = validate_semantics(&world, &graph);
+        // 7. Semantic Validation (Meaning)
+        let default_graph = SemanticGraph::new();
+        let graph = self.semantic_graph.as_ref().unwrap_or(&default_graph);
+        let semantic_errors_raw = validate_semantics(&world, graph);
         let semantic_errors: Vec<String> = semantic_errors_raw
             .into_iter()
             .map(|e| e.message)
             .collect();
 
-        // 6. Serialize and Return
         AnalysisReport {
             tokens: debug_tokens,
             syntax_errors,
@@ -189,44 +214,6 @@ impl LogosEngine {
             debug_info: format!("Lemmas: {}, Paradigms: {}", dict.lemmas.len(), dict.paradigms.len()),
         }
     }
-}
-
-use rkyv::Archived;
-
-/// Helper: Robust Morphology Resolution
-fn resolve_morphology(dict: &Archived<Dictionary>, token_text: &str, known_lemma_id: Option<u32>) -> (String, String) {
-    let mut morph_desc = "None".to_string();
-    let mut debug_msg = String::new();
-
-    for lemma in dict.lemmas.iter() {
-        // Optimization: If we know the lemma ID, only check that one
-        if let Some(id) = known_lemma_id {
-            if lemma.id.0 != id { continue; }
-        }
-
-        for paradigm in dict.paradigms.iter() {
-            for (flags_bits, rule_suffix) in paradigm.endings.iter() {
-                let suffix_str = rule_suffix.as_str();
-                if token_text.ends_with(suffix_str) {
-                    let stem_len = token_text.len() - suffix_str.len();
-                    let candidate_stem = &token_text[..stem_len];
-                    
-                    if lemma.text.starts_with(candidate_stem) {
-                            let flags = logos_protocol::MorphFlags::from_bits_truncate(*flags_bits);
-                            morph_desc = format!("{:?}", flags);
-                            debug_msg = format!("Matched! Stem: '{}', Suffix: '{}', Lemma: '{}'", candidate_stem, suffix_str, lemma.text);
-                            return (morph_desc, debug_msg);
-                    }
-                }
-            }
-        }
-    }
-    
-    if morph_desc == "None" {
-        debug_msg = format!("No match found for '{}'", token_text);
-    }
-
-    (morph_desc, debug_msg)
 }
 
 #[cfg(test)]
@@ -238,8 +225,10 @@ mod tests {
     #[test]
     fn test_robust_morphology_resolution() {
         // 1. Setup Mock Dictionary
-        // Lemma: "άνθρωπος" (Full word stored)
-        // Paradigm: Suffix "ος" -> Nom|Sg|Masc
+        // Lemma: "άνθρωπος" (Full word stored, stem: άνθρωπ)
+        // Paradigm: 
+        //  - "ος" -> Nom|Sg|Masc
+        //  - "ου" -> Gen|Sg|Masc
         let lemma = Lemma {
             id: LemmaId(1),
             text: "άνθρωπος".to_string(),
@@ -250,7 +239,8 @@ mod tests {
         let paradigm = Paradigm {
             id: ParadigmId(1),
             endings: vec![
-                ((logos_protocol::MorphFlags::NOMINATIVE | logos_protocol::MorphFlags::SINGULAR | logos_protocol::MorphFlags::MASCULINE).bits(), "ος".to_string())
+                ((logos_protocol::MorphFlags::NOMINATIVE | logos_protocol::MorphFlags::SINGULAR | logos_protocol::MorphFlags::MASCULINE).bits(), "ος".to_string()),
+                ((logos_protocol::MorphFlags::GENITIVE | logos_protocol::MorphFlags::SINGULAR | logos_protocol::MorphFlags::MASCULINE).bits(), "ου".to_string())
             ],
         };
 
@@ -264,14 +254,21 @@ mod tests {
         let bytes = to_bytes::<_, 256>(&dict).unwrap();
         let archived = unsafe { rkyv::archived_root::<Dictionary>(&bytes) };
 
-        // 2. Test Case: Input "άνθρωπος"
-        // Should match suffix "ος", leaving stem "άνθρωπ".
-        // Lemma "άνθρωπος" starts with "άνθρωπ". -> MATCH.
-        let (morph, debug) = resolve_morphology(archived, "άνθρωπος", Some(1));
+        // Case 1: "άνθρωπος" (Nom Sg)
+        let analysis = logos_parser::morphology::resolve_morphology(archived, "άνθρωπος", Some(1));
+        assert_ne!(analysis.kind, "Unknown", "Should resolve 'άνθρωπος'");
+        assert!(format!("{:?}", analysis.flags).contains("NOMINATIVE"), "Should be Nominative");
+        assert!(analysis.debug_msg.contains("Matched!"), "Debug should indicate match");
 
-        assert_ne!(morph, "None", "Should have resolved morphology");
-        assert!(debug.contains("Matched!"), "Debug should indicate match");
-        assert!(debug.contains("Stem: 'άνθρωπ'"), "Should identify correct stem");
+        // Case 2: "άνθρωπου" (Gen Sg)
+        let analysis = logos_parser::morphology::resolve_morphology(archived, "άνθρωπου", Some(1));
+        assert_ne!(analysis.kind, "Unknown", "Should resolve 'άνθρωπου'");
+        assert!(format!("{:?}", analysis.flags).contains("GENITIVE"), "Should be Genitive");
+
+        // Case 3: "άλογο" (Mismatch)
+        // We pass None to simulate that Lexer didn't match it (or we are verifying scratch lookup)
+        let analysis = logos_parser::morphology::resolve_morphology(archived, "άλογο", None);
+        assert_eq!(analysis.kind, "Unknown", "Should NOT resolve 'άλογο'");
     }
 
     #[test]
@@ -296,7 +293,6 @@ mod tests {
         let engine = LogosEngine::new(data);
         
         // Run Analysis: "απάνθρωπος" (Cruel/Inhuman)
-        // We use this because "άνθρωπος" is missing from the current dict_v10.rkyv
         let report = engine.analyze_core("απάνθρωπος");
         
         // Verify Results
@@ -310,5 +306,65 @@ mod tests {
         println!("Successfully analyzed '{}'", token.text);
         println!("Debug Info: {}", token.debug);
         println!("Morphology: {}", token.morphology);
+
+        // Run Analysis: "xyznonsense" (Unknown)
+        let report_unknown = engine.analyze_core("xyznonsense");
+        let token_unknown = &report_unknown.tokens[0];
+        assert_eq!(token_unknown.text, "xyznonsense");
+        assert_eq!(token_unknown.kind, "Unknown", "Should be Unknown");
+        assert_eq!(token_unknown.morphology, "None", "Morphology should be None");
+    }
+
+    #[test]
+    fn test_full_sentence_analysis() {
+        use std::fs;
+        use std::path::PathBuf;
+
+        // Load Dictionary
+        let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        path.push("www");
+        path.push("dict_v10.rkyv");
+        if !path.exists() { return; }
+        let data = fs::read(path).expect("Failed to read dictionary file");
+        let engine = LogosEngine::new(data);
+
+        // Analyze: "Ο απάνθρωπος." (The cruel [one].)
+        let report = engine.analyze_core("Ο απάνθρωπος.");
+        
+        assert_eq!(report.tokens.len(), 3, "Should have 3 tokens");
+        
+        let t1 = &report.tokens[1]; // "απάνθρωπος"
+        assert_eq!(t1.text, "απάνθρωπος");
+        assert_ne!(t1.kind, "Unknown", "Middle word should be resolved");
+        
+        let t2 = &report.tokens[2]; // "."
+        assert_eq!(t2.text, ".");
+        assert_eq!(t2.kind, "Punctuation", "Dot should be punctuation");
+    }
+
+    #[test]
+    fn test_syntax_and_semantics_pipeline() {
+        use std::fs;
+        use std::path::PathBuf;
+
+        // Load Dictionary
+        let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        path.push("www");
+        path.push("dict_v10.rkyv");
+        if !path.exists() { return; }
+        let data = fs::read(path).expect("Failed to read dictionary file");
+        let engine = LogosEngine::new(data);
+
+        // Analyze: "Ο απάνθρωπος" (2 tokens exactly to trigger mock syntax)
+        let report = engine.analyze_core("Ο απάνθρωπος");
+        
+        assert_eq!(report.tokens.len(), 2, "Should have 2 tokens");
+
+        // Verify Syntax/Semantics fields exist (Pipeline RAN)
+        println!("Syntax Errors: {:?}", report.syntax_errors.len());
+        println!("Semantic Errors: {:?}", report.semantic_errors.len());
+        
+        // Ensure we didn't crash during ECS/Solver steps
+        assert!(report.debug_info.contains("Lemmas:"), "Debug info should be present");
     }
 }
